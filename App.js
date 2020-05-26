@@ -1,24 +1,24 @@
 
 
-import React from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-} from 'react-native';
+import React, {Component} from 'react';
+import { createSwitchNavigator, createAppContainer} from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
+import Login from './src/screens/Login';
+import HomeScreen from './src/screens/HomeScreen';
+import AuthLoadingScreen from './src/screens/AuthLoadingScreen'
 
 
-const App: () => React$Node = () => {
-  return (
-        <View style={{justifyContent: 'center', alignItems: 'center', flex: 1}}>
-          <Text>
-            I am here
-          </Text>
-        </View>
-  );
-};
+const AppStack = createStackNavigator({Home: HomeScreen});
+const AuthStack = createStackNavigator({Login: Login});
 
-export default App;
+export default createAppContainer(createSwitchNavigator(
+  {
+    AuthLoading: AuthLoadingScreen,
+    App: AppStack,
+    Auth: AuthStack
+  },
+  {
+    initialRouteName: 'AuthLoading'
+  }
+
+));

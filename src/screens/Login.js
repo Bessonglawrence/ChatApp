@@ -13,6 +13,11 @@ import User from '../components/User'
 
 
 export default class Login extends Component {
+
+  static navigationOptions ={
+    header: null
+  }
+
   constructor(props) {
     super(props);
   
@@ -37,18 +42,23 @@ export default class Login extends Component {
 
   submitForm = async () => {
     const { phone, name }= this.state;
-    if(phone.length < 9){
-      Alert.alert('Error', 'Phone number must be 9 digits and above')
-    } else if( name.length < 3) {
+    if(phone.length < 9 && name.length < 3){
+      Alert.alert('Error', 'Phone number must be  equal to or greater 9 digits','name must be greater than 3 characters');
+    } else if( phone.length >= 9 && name.length < 3) {
       Alert.alert('Error', 'Name must be 3 characters or more')
+    } else if (phone.length < 9 && name.length >= 3) {
+      Alert.alert('Error', 'Phone number must be greater than 9 digits')
+    } else {
+      // save user data
+      await AsyncStorage.setItem('userPhone', phone)
+      User.phone = phone;
+      this.props.navigation.navigate('App')
     }
-    // save user data
-    await AsyncStorage.setItem('userPhone', phone)
-    user.phone = phone;
-    this.props.navigation.navigate('App')
+    
   }
 
   render(){
+    const { phone, name }= this.state;
     return (
 
       <View style={styles.container}>
@@ -56,13 +66,13 @@ export default class Login extends Component {
           keyboardType='number-pad'
           placeholder= "Phone number"
           style={styles.input}
-          value={this.state.phone}
+          value={phone}
           onChangeText={this.handleChange('phone')}
         />
         <TextInput
           placeholder= "Name"
           style={styles.input}
-          value={this.state.name}
+          value={name}
           onChangeText={this.handleChange('name')}
         />
 

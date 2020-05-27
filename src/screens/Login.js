@@ -62,6 +62,11 @@ export default class Login extends Component {
     return (
 
       <View style={styles.container}>
+
+        <View style={styles.loginView}>
+          <Text style={styles.loginText}>LOGIN</Text>
+        </View>
+
         <TextInput
           keyboardType='number-pad'
           placeholder= "Phone number"
@@ -115,6 +120,15 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontSize: 20,
     fontStyle: 'italic',
+  },
+  loginText:{
+    fontSize: 24,
+    fontStyle: 'italic',
+    fontWeight: 'bold',
+    color: 'lightblue'
+  },
+  loginView:{
+    marginBottom: 15
   }
 
 });

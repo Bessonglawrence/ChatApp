@@ -9,6 +9,8 @@ import {
   Alert,
   AsyncStorage
 } from 'react-native';
+import firebase from 'firebase';
+
 import User from '../components/User'
 
 
@@ -31,7 +33,7 @@ export default class Login extends Component {
     this.setState({ [key]: value })
   }
 
-  componentWillMount(){
+  componentDidMount(){
     AsyncStorage.getItem('userPhone')
     .then(val =>{
       if(val){
@@ -52,6 +54,7 @@ export default class Login extends Component {
       // save user data
       await AsyncStorage.setItem('userPhone', phone)
       User.phone = phone;
+      firebase.database().ref('users/' + User.phone).set({name: name})
       this.props.navigation.navigate('App')
     }
     
